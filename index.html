@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>手机图片压缩上传demo</title>
+    <link rel="stylesheet" type="text/css" href="./css/reset.css">
+    <link rel="stylesheet" type="text/css" href="./css/main.css">
+    <script src="./js/jquery.js"></script>
+    <script src="./dist/exif.min.js"></script>
+    <script src="./dist/compress.min.js"></script>
+</head>
+<body class="sign_bg">
+    <div class="pc_tip">
+        <p class="tip">请在手机上打开</p>
+    </div>
+    <div class="s_info">
+        <div class="imgUpload">
+            <div id="addImg"></div>
+            <input type="file" id="imgFile" class="fileUp">
+            <input type="hidden" id="imgValue" name="image">
+            <div class="uploadImgBox">
+                <span id="imgCancel" class="cancel_btn" onclick="imgCancel()"></span>
+                <img id="imgShow" src="" alt="">
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    /*
+    * UploadCompress类接受一个如下对象
+    *
+    * 对象的参数：
+    * clickCase: 绑定点击的元素 (必填)
+    * fileEle:  存放文件的元素 (必填)
+    * threshold: 上传文件大小的阈值，如果没超过这个值，就不压缩（选填，默认200kb）
+    * maxWidth: 压缩后图片最大的宽度(选填，默认1000px)
+    * maxHeight: 压缩后图片最大的高度(选填，默认1000px)
+    * callback: 压缩完的回调函数，接受一个参数（压缩后的base64位图片）
+    *
+    *使用流程：
+    * 1.先根据上面的参数新建一个UploadCompress对象
+    * 2.然后调用UploadCompress对象的初始方法init()
+    *
+    * 注：1.会优先判断文件大小的阈值，再去判断压缩图片的宽度和高度大小
+    *     2.添加完参数后的对象要初始化一下（upload.init();）
+    *     3.若图片文件太大可能压缩会有一定延迟;
+    *     4.不依赖jquery插件
+    *     5.使用前要引用exif.js这个插件
+    *
+    * */
+
+    var upload = new UploadCompress({
+        clickCase: "#addImg",
+        fileEle: "#imgFile",
+        maxHeight: 600,
+        maxWidth: 600,
+        threshold: 300000,
+        callback: function(res){
+            $(".uploadImgBox").show();
+            $("#imgShow").attr("src", res);
+            $("#imgValue").val(res);
+            $('#addImg').hide();
+        }
+    });
+    upload.init();
+
+    function imgCancel() {
+        $("#addImg").show();
+        $('#imgFile').val('');
+        $('#imgValue').val('');
+        $(".uploadImgBox").hide();
+    }
+</script>
+</html>
