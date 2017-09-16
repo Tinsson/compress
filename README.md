@@ -3,7 +3,7 @@
 
 >使用流程
 
-###1.定义一个UploadCompress对象
+### 1.定义一个UploadCompress对象
 构造UploadCompress对象时接受一个包含参数的对象
 ```
 var upload = new UploadCompress({
@@ -25,7 +25,7 @@ maxWidth: 选填，压缩后图片最大的宽度(默认1000px)<br>
 maxHeight: 选填，压缩后图片最大的高度(默认1000px)<br>
 
 
-###2.调用初始化
+### 2.调用初始化
 ```
     upload.init();
 ```
